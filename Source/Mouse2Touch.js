@@ -1,6 +1,6 @@
 /*
 ---
-description: A global adapter that automatically map mouse events to touch events
+description: A MooTools plugin that automatically map mouse events to touch events
 
 license: MIT-style
 
