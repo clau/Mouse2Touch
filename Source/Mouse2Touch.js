@@ -7,6 +7,7 @@ license: MIT-style
 authors:
 - Chi Wai Lau (http://tabqwert.com)
 - Scott Kyle (http://appden.com)
+- Bram Loogman
 
 requires:
 - core/1.2.4: '*'
@@ -20,7 +21,7 @@ provides: [Mouse2Touch]
   } catch(e) {
     return;
   }
-
+  
   ['touchstart', 'touchmove', 'touchend'].each(function(type){
       Element.NativeEvents[type] = 2;
   });
@@ -30,20 +31,12 @@ provides: [Mouse2Touch]
     'mousemove': 'touchmove',
     'mouseup': 'touchend'
   };
-
-  var condition = function(event) {
-    var touch = event.event.changedTouches[0];
-    event.page = {
-      x: touch.pageX,
-      y: touch.pageY
+    
+  Object.each(mapping, function(touch, mouse) { 
+    Element.Events[mouse] = {
+	  onAdd: function(fn) {
+        this.addEvent(touch, fn);
+	  }
     };
-    return true;
-  };
-
-  for (var e in mapping) {
-    Element.Events[e] = {
-      base: mapping[e],
-      condition: condition
-    };
-  }
+  });  
 })();
