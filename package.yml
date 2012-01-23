@@ -1,4 +1,3 @@
----
 name: Mouse2Touch
 author: clau
 category: Utilities
@@ -6,3 +5,6 @@ tags: [iphone, ipad, safari, multitouch]
 docs: http://tabqwerty.com/2010/04/08/supporting-mouse-events-in-mobile-safari.html
 demo: http://www.mikematas.com
 current: 0.1
+
+sources:
+  - "Source/Mouse2Touch.js"

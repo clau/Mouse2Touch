@@ -32,11 +32,31 @@ provides: [Mouse2Touch]
     'mouseup': 'touchend'
   };
     
-  Object.each(mapping, function(touch, mouse) { 
+  Object.each(mapping, function(touch, mouse) {
+    Element.Events[touch] = {
+       condition: function(e) {
+         var useTouch = this.retrieve('useTouch');
+         if (!useTouch) return false;
+         useTouch[mouse]++;
+         return true;
+       }
+    }
     Element.Events[mouse] = {
-	  onAdd: function(fn) {
+      condition: function(e) {
+        var useTouch = this.retrieve('useTouch');  
+        if (!useTouch || !useTouch[mouse]) return true;
+        useTouch[mouse]--;
+        return false;
+      },
+      onAdd: function(fn) {
+        var useTouch = this.retrieve('useTouch', {});
+        if (!useTouch[mouse]) useTouch[mouse] = 0;
         this.addEvent(touch, fn);
-	  }
+        
+      },
+      onRemove: function(fn) {
+        this.removeEvent(touch, fn);
+      }
     };
   });  
 })();
